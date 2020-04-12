@@ -1,0 +1,16 @@
+# Azure Host Agent - CD
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: Docker@2
+  inputs:
+    containerRegistry: 'DockerHub'
+    repository: 'registry.joachimveulemans.be/azure-host-agent'
+    command: 'buildAndPush'
+    Dockerfile: 'Dockerfile'
+    tags: 'latest'
