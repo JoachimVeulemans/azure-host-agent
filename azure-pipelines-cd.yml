@@ -10,7 +10,7 @@ steps:
 - task: Docker@2
   inputs:
     containerRegistry: 'DockerHubJoachim'
-    repository: 'registry.joachimveulemans.be/azure-host-agent'
+    repository: 'azure-host-agent'
     command: 'buildAndPush'
     Dockerfile: 'Dockerfile'
     tags: 'latest'
