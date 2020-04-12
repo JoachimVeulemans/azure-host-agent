@@ -9,7 +9,7 @@ pool:
 steps:
 - task: Docker@2
   inputs:
-    containerRegistry: 'DockerHub'
+    containerRegistry: 'DockerHubJoachim'
     repository: 'registry.joachimveulemans.be/azure-host-agent'
     command: 'build'
     Dockerfile: 'Dockerfile'
