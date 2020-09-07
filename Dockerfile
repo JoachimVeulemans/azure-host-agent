@@ -28,17 +28,17 @@ RUN apt-get install -y --no-install-recommends \
 # 6 - Change working directory to /azp
 WORKDIR /azp
 
-# 7 - Copy the start script to the docker container
-COPY ./start.sh .
-
-# 8 - Make the start script executable
-RUN chmod +x start.sh
-
-# 9 - Download Google Chrome debian package
+# 7 - Download Google Chrome debian package
 RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 
-# 10 - Install downloaded Google Chrome debian package
+# 8 - Install downloaded Google Chrome debian package
 RUN dpkg -i google-chrome-stable_current_amd64.deb; apt-get -fy install
+
+# 9 - Copy the start script to the docker container
+COPY ./start.sh .
+
+# 10 - Make the start script executable
+RUN chmod +x start.sh
 
 # 11 - Execute start script
 CMD ["./start.sh"]

@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e
 
+if [ -z "$AZP_NAME" ]; then
+  echo 1>&2 "error: missing AZP_NAME environment variable"
+  exit 1
+fi
+
 if [ -z "$AZP_URL" ]; then
   echo 1>&2 "error: missing AZP_URL environment variable"
   exit 1
@@ -20,6 +25,12 @@ unset AZP_TOKEN
 
 if [ -n "$AZP_WORK" ]; then
   mkdir -p "$AZP_WORK"
+fi
+
+AZP_POOL_IN="Default"
+
+if [ ! -z "$AZP_POOL" ]; then
+  AZP_POOL_IN=$AZP_POOL
 fi
 
 rm -rf /azp/agent
@@ -76,11 +87,11 @@ trap 'cleanup; exit 143' TERM
 print_header "3. Configuring Azure Pipelines agent..."
 
 ./config.sh --unattended \
-  --agent "${AZP_AGENT_NAME:-$(hostname)}" \
+  --agent "${AZP_AGENT_NAME:-$AZP_NAME}" \
   --url "$AZP_URL" \
   --auth PAT \
   --token $(cat "$AZP_TOKEN_FILE") \
-  --pool "${AZP_POOL:-Default}" \
+  --pool "${AZP_POOL:-$AZP_POOL_IN}" \
   --work "${AZP_WORK:-_work}" \
   --replace \
   --acceptTeeEula & wait $!
